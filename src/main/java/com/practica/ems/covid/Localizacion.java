@@ -97,7 +97,7 @@ public class Localizacion {
 		
 		return cadena;		
 	}
-	
+
 	@SuppressWarnings("unused")
 	private FechaHora parsearFecha (String fecha) {
 		int dia, mes, anio;

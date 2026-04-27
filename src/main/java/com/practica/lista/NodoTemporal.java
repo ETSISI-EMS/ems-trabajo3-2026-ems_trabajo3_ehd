@@ -16,20 +16,23 @@ public class NodoTemporal implements Comparable<NodoTemporal> {
 	private final LinkedList<NodoPosicion> listaCoordenadas;
 	private FechaHora fecha;
 
-	public static NodoTemporal fromPosicionPersona(PosicionPersona pp) {
-		NodoTemporal nt =  new NodoTemporal();
-		nt.fecha = pp.getFechaPosicion();
-
-		NodoPosicion np = NodoPosicion.fromPosicionPersona(pp);
-		nt.listaCoordenadas.add(np);
-
-		return nt;
-	}
-
 	public NodoTemporal() {
 		super();
 		listaCoordenadas = new LinkedList<>();
 		fecha = null;
+	}
+
+	public NodoTemporal(FechaHora fecha) {
+		super();
+		listaCoordenadas = new LinkedList<>();
+		this.fecha = fecha;
+	}
+
+	public static NodoTemporal fromPosicionPersona(PosicionPersona pp) {
+		NodoTemporal nt = new NodoTemporal(pp.getFechaPosicion());
+		NodoPosicion np = NodoPosicion.fromPosicionPersona(pp);
+		nt.listaCoordenadas.add(np);
+		return nt;
 	}
 
 	public FechaHora getFecha() {

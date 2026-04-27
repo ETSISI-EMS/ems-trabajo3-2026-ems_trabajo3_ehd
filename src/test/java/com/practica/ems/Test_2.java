@@ -1,8 +1,10 @@
+
 package com.practica.ems;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
@@ -23,7 +25,7 @@ public class Test_2 {
 	private static ContactosCovid contactosCovid;
 
 	@BeforeEach
-	void setUp() {		
+	void setUp() throws EmsInvalidTypeException, EmsInvalidNumberOfDataException, EmsDuplicatePersonException, EmsDuplicateLocationException, IOException {
 		contactosCovid = new ContactosCovid();
 		contactosCovid.loadDataFile("datos.txt", false);
 	}
@@ -85,7 +87,7 @@ public class Test_2 {
 					false);
 			Assertions.assertEquals(contactosCovid.findPersona("12345678J"), 3);
 		} catch (EmsInvalidTypeException | EmsInvalidNumberOfDataException | EmsDuplicatePersonException
-				| EmsDuplicateLocationException e) {
+		         | EmsDuplicateLocationException e) {
 			// TODO Auto-generated catch block
 			System.out.println("Error al cargar una persona valida");
 		}
@@ -98,7 +100,7 @@ public class Test_2 {
 			contactosCovid.loadData("LOCALIZACION;12345678J;16/05/2021;20:45;54.3890;28.1698\n", false);
 			Assertions.assertEquals(contactosCovid.findLocalizacion("12345678J", "16/05/2021", "20:45"), 5);
 		} catch (EmsInvalidTypeException | EmsInvalidNumberOfDataException | EmsDuplicatePersonException
-				| EmsDuplicateLocationException e) {
+		         | EmsDuplicateLocationException e) {
 			// TODO Auto-generated catch block
 			System.out.println("Error al cargar una localizacion valida");
 		}
@@ -119,7 +121,7 @@ public class Test_2 {
 		});
 
 	}
-	
+
 	@DisplayName("Obtiene localizaciones de una persona")
 	@Test
 	void test_1_11() throws EmsPersonNotFoundException {
@@ -127,7 +129,7 @@ public class Test_2 {
 			assertEquals(contactosCovid.localizacionPersona("12121212R").size(),3);
 		} catch (EmsPersonNotFoundException e) {
 			e.printStackTrace();
-		}	
+		}
 	}
 
 	@DisplayName("Obtiene localizaciones de una persona que no existe")
@@ -137,7 +139,7 @@ public class Test_2 {
 			assertEquals(contactosCovid.localizacionPersona("00000000A").size(),3);
 		});
 	}
-	
+
 	@DisplayName("Elimina una persona que no existe")
 	@Test
 	void test_1_13() throws EmsPersonNotFoundException {
@@ -145,12 +147,11 @@ public class Test_2 {
 			contactosCovid.delPersona("00000000A");
 		});
 	}
-	
+
 	@DisplayName("Elimina una persona que existe")
 	@Test
 	void test_1_14() throws EmsPersonNotFoundException {
 		contactosCovid.delPersona("98765432J");
-		assertEquals(contactosCovid.getPoblacion().getLista().size(),1);		
+		assertEquals(contactosCovid.getPoblacion().getLista().size(),1);
 	}
 }
-
